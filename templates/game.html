@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section>
+    {% with highscore = session['highscore'] %}
+        <div class="header">
+            <div class="left3">Score</div><div class="center3">Time</div><div class="right3">High Score</div>
+            <div class="left3" id="score">0/0</div>
+            <div class="center3" id="time-remaining">00</div>
+            <div class="right3" id="highscore">{{highscore['score']}}/{{highscore['plays']}}</div>
+        </div>
+    {% endwith %}
+    {% with board = session['board'] %}
+        <table class="board">
+            <tbody>
+            {% for row in board %}
+                <tr>
+                {% for cell in row %}
+                    <td>{{cell}}</td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endwith %}
+    <div class="border-container">
+        <form name="wordForm" id="wordForm">
+            <input type="text" name="word" id="word" placeholder="Enter a word" autofocus>
+            <button type="submit" id="submitWord">Submit &lt;ENTER&gt;</button>
+        </form>
+        <div id="wordListContainer">
+        <ul id="wordList"></ul>
+        </div>
+    </div>
+    </section>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/scripts/game.js"></script>
+    <script>
+        const game = new Game("boggle");
+
+        game.highscore.score = {% print session['highscore']['score'] %};
+        game.highscore.plays = {% print session['highscore']['plays'] %};
+        $("tr", ".board").click(game.addLetter);
+        $("#submitWord").click(game.submitWord);
+    </script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Boggle Start Page{% endblock %}
+{% block content %}
+<section>
+    <h1>Boggle</h1>
+    <div class="border-container configuration">
+        <h3>Select the board dimensions (minimum 4, maximimum 6)</h3>
+        <form name="config" action="/play" Method="POST">
+            <input type="radio" id="c4" name="config" value="4">
+            <label for="c4">4 rows and coloumns</label><br/>
+            <input type="radio" id="c5" name="config" value="5" checked>
+            <label for="c5">5 rows and coloumns</label><br/>
+            <input type="radio" id="c6" name="config" value="6">
+            <label for="c6">6 rows and coloumns</label><br/>
+            <input type="submit" value="Start Game">
+            <input type="button" name="reset" onclick="forms['config'].action='reset'; forms['config'].submit()" value="Reset Session">
+        </form>
+    </div>
+</section>
+
+{% endblock %}
